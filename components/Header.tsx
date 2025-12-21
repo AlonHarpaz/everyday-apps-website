@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { AnimatedSparkle } from "@/components/AnimatedSparkle";
 
 export function Header() {
@@ -85,9 +84,19 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-4">
-          <Button asChild>
-            <Link href="/apps">View Apps</Link>
-          </Button>
+          <Link
+            href="/apps"
+            className="relative px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 group"
+          >
+            {/* Gradient border */}
+            <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] p-[1px]">
+              <span className="absolute inset-[1px] rounded-[7px] bg-background" />
+            </span>
+            {/* Text with gradient on hover */}
+            <span className="relative bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] bg-clip-text text-transparent">
+              View Apps
+            </span>
+          </Link>
         </div>
       </div>
     </header>
