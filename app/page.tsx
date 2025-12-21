@@ -38,6 +38,13 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { AppIcon } from "@/components/AppIcon";
+import {
+  ImportMockup,
+  FormMockup,
+  ExportMockup,
+  MailMockup,
+  SignatureMockup,
+} from "@/components/mockups";
 
 // App showcase data
 const appShowcaseData = [
@@ -227,8 +234,229 @@ const appShowcaseData = [
   },
 ];
 
+// Simple mockup components for apps without dedicated mockups
+function DashboardMockup() {
+  return (
+    <div className="p-6 space-y-4">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <div className="text-lg font-semibold">Project Overview</div>
+          <div className="text-sm text-muted-foreground">Real-time metrics</div>
+        </div>
+        <div className="flex gap-2">
+          <div className="px-3 py-1 text-xs rounded-full bg-[#97AEFF]/20 text-[#97AEFF]">This Week</div>
+        </div>
+      </div>
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { label: "Tasks Done", value: "127", color: "#22c55e" },
+          { label: "In Progress", value: "43", color: "#FAA1F1" },
+          { label: "Blocked", value: "8", color: "#ef4444" },
+        ].map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 + i * 0.1 }}
+            className="p-4 bg-card rounded-lg border border-border text-center"
+          >
+            <div className="text-2xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
+            <div className="text-xs text-muted-foreground">{stat.label}</div>
+          </motion.div>
+        ))}
+      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="h-32 bg-card rounded-lg border border-border p-4"
+      >
+        <div className="flex items-end justify-between h-full gap-2">
+          {[40, 65, 45, 80, 55, 70, 90].map((h, i) => (
+            <div
+              key={i}
+              className="flex-1 rounded-t transition-all"
+              style={{
+                height: `${h}%`,
+                background: `linear-gradient(to top, #97AEFF, #FAA1F1)`,
+                opacity: 0.7 + i * 0.04,
+              }}
+            />
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+function CalendarMockup() {
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+  const hours = ["9 AM", "10 AM", "11 AM", "12 PM"];
+  return (
+    <div className="p-6">
+      <div className="flex items-center justify-between mb-4">
+        <div className="text-lg font-semibold">Week View</div>
+        <div className="flex gap-2 text-xs text-muted-foreground">
+          <span>Dec 16 - 20, 2024</span>
+        </div>
+      </div>
+      <div className="grid grid-cols-6 gap-1 text-xs">
+        <div />
+        {days.map((day) => (
+          <div key={day} className="text-center text-muted-foreground py-2">{day}</div>
+        ))}
+        {hours.map((hour, hi) => (
+          <>
+            <div key={hour} className="text-muted-foreground py-3 pr-2 text-right">{hour}</div>
+            {days.map((day, di) => (
+              <motion.div
+                key={`${hour}-${day}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 + (hi * 5 + di) * 0.02 }}
+                className="h-12 bg-card border border-border rounded relative"
+              >
+                {hi === 0 && di === 1 && (
+                  <div className="absolute inset-1 rounded bg-[#97AEFF]/30 border-l-2 border-[#97AEFF] px-1 text-[10px]">
+                    Team Sync
+                  </div>
+                )}
+                {hi === 1 && di === 3 && (
+                  <div className="absolute inset-1 rounded bg-[#FAA1F1]/30 border-l-2 border-[#FAA1F1] px-1 text-[10px]">
+                    Client Call
+                  </div>
+                )}
+                {hi === 2 && di === 0 && (
+                  <div className="absolute inset-1 rounded bg-[#6161FF]/30 border-l-2 border-[#6161FF] px-1 text-[10px]">
+                    Review
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TimesheetMockup() {
+  const entries = [
+    { project: "Website Redesign", hours: "3:45", status: "running" },
+    { project: "API Integration", hours: "2:30", status: "done" },
+    { project: "Client Meeting", hours: "1:00", status: "done" },
+  ];
+  return (
+    <div className="p-6">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <div className="text-lg font-semibold">Today&apos;s Time</div>
+          <div className="text-sm text-muted-foreground">Monday, Dec 16</div>
+        </div>
+        <div className="text-right">
+          <div className="text-2xl font-bold text-[#FAA1F1]">7:15</div>
+          <div className="text-xs text-muted-foreground">hours logged</div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {entries.map((entry, i) => (
+          <motion.div
+            key={entry.project}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 + i * 0.1 }}
+            className="flex items-center gap-3 p-3 bg-card rounded-lg border border-border"
+          >
+            <div className={`w-3 h-3 rounded-full ${entry.status === "running" ? "bg-green-500 animate-pulse" : "bg-muted-foreground"}`} />
+            <div className="flex-1">
+              <div className="font-medium text-sm">{entry.project}</div>
+            </div>
+            <div className="text-lg font-mono font-semibold">{entry.hours}</div>
+            {entry.status === "running" && (
+              <button className="px-2 py-1 text-xs bg-red-500/20 text-red-500 rounded">Stop</button>
+            )}
+          </motion.div>
+        ))}
+      </div>
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="w-full mt-4 py-2.5 rounded-lg text-sm font-medium bg-[#FAA1F1] text-white"
+      >
+        + Start New Timer
+      </motion.button>
+    </div>
+  );
+}
+
+function ConnectMockup() {
+  const integrations = [
+    { name: "HubSpot", status: "connected", color: "#ff7a59" },
+    { name: "Salesforce", status: "connected", color: "#00a1e0" },
+    { name: "QuickBooks", status: "pending", color: "#2ca01c" },
+  ];
+  return (
+    <div className="p-6">
+      <div className="text-lg font-semibold mb-4">Connected Apps</div>
+      <div className="space-y-3">
+        {integrations.map((app, i) => (
+          <motion.div
+            key={app.name}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 + i * 0.1 }}
+            className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border"
+          >
+            <div
+              className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm"
+              style={{ backgroundColor: app.color }}
+            >
+              {app.name[0]}
+            </div>
+            <div className="flex-1">
+              <div className="font-medium">{app.name}</div>
+              <div className="text-xs text-muted-foreground">Last sync: 2 min ago</div>
+            </div>
+            <div className={`px-2 py-1 rounded-full text-xs ${
+              app.status === "connected"
+                ? "bg-green-500/20 text-green-500"
+                : "bg-yellow-500/20 text-yellow-500"
+            }`}>
+              {app.status === "connected" ? "Connected" : "Setup"}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-4 p-4 border-2 border-dashed border-border rounded-lg text-center"
+      >
+        <Link2 className="mx-auto mb-2 text-muted-foreground" size={24} />
+        <div className="text-sm text-muted-foreground">+ Add Integration</div>
+      </motion.div>
+    </div>
+  );
+}
+
+// Map app IDs to mockup components
+const mockupComponents: Record<string, React.ComponentType> = {
+  import: ImportMockup,
+  form: FormMockup,
+  export: ExportMockup,
+  mail: MailMockup,
+  signature: SignatureMockup,
+  dashboard: DashboardMockup,
+  calendar: CalendarMockup,
+  timesheet: TimesheetMockup,
+  connect: ConnectMockup,
+};
+
 function AppShowcase() {
   const [selectedApp, setSelectedApp] = useState(appShowcaseData[0]);
+  const MockupComponent = mockupComponents[selectedApp.id];
 
   return (
     <section className="py-20 bg-card/30 overflow-hidden">
@@ -280,41 +508,83 @@ function AppShowcase() {
           </div>
         </motion.div>
 
-        {/* Feature Cards */}
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            key={selectedApp.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="grid md:grid-cols-3 gap-6"
-          >
-            {selectedApp.features.map((feature, index) => (
-              <ShowcaseFeatureCard
-                key={index}
-                title={feature.title}
-                description={feature.description}
-                icon={feature.icon}
-                index={index}
-              />
-            ))}
-          </motion.div>
+        {/* Mockup + Features Grid */}
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            {/* Mockup */}
+            <motion.div
+              key={`mockup-${selectedApp.id}`}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+              className="relative rounded-2xl bg-background border border-border/50 overflow-hidden shadow-2xl"
+            >
+              {/* Window controls */}
+              <div className="flex items-center gap-2 px-4 py-3 bg-card/50 border-b border-border/50">
+                <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                <div className="flex-1 text-center">
+                  <span className="text-xs text-muted-foreground">{selectedApp.name}</span>
+                </div>
+              </div>
+              {/* Mockup content */}
+              <div className="min-h-[400px]">
+                {MockupComponent && <MockupComponent />}
+              </div>
+            </motion.div>
 
-          {/* App CTA */}
-          <motion.div
-            key={`cta-${selectedApp.id}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
-            className="text-center mt-10"
-          >
-            <Button asChild size="lg" className={selectedApp.isLive ? "bg-gradient-to-r from-[#6B8AFF] via-[#E871D8] to-[#6161FF] hover:opacity-90 border-0 text-white" : ""}>
-              <Link href={`/apps/${selectedApp.id === "import" ? "everyday-import" : `everyday-${selectedApp.id}`}`}>
-                {selectedApp.isLive ? "Get Started Free" : "Join Waiting List"}
-                <ArrowRight className="ml-2" size={16} />
-              </Link>
-            </Button>
-          </motion.div>
+            {/* Feature Cards */}
+            <motion.div
+              key={`features-${selectedApp.id}`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-4"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center">
+                  <AppIcon icon={selectedApp.icon} size={24} className="text-[#FAA1F1]" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold">{selectedApp.name}</h3>
+                  <div className="flex items-center gap-2">
+                    {selectedApp.isLive ? (
+                      <span className="inline-flex items-center gap-1.5 text-xs text-green-500">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        Live on Marketplace
+                      </span>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">Coming Soon</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {selectedApp.features.map((feature, index) => (
+                <ShowcaseFeatureCard
+                  key={index}
+                  title={feature.title}
+                  description={feature.description}
+                  icon={feature.icon}
+                  index={index}
+                />
+              ))}
+
+              {/* App CTA */}
+              <div className="pt-4">
+                <Button asChild size="lg" className={`w-full ${selectedApp.isLive ? "bg-gradient-to-r from-[#6B8AFF] via-[#E871D8] to-[#6161FF] hover:opacity-90 border-0 text-white" : ""}`}>
+                  <Link href={`/apps/${selectedApp.id === "import" ? "everyday-import" : `everyday-${selectedApp.id}`}`}>
+                    {selectedApp.isLive ? "Get Started Free" : "Join Waiting List"}
+                    <ArrowRight className="ml-2" size={16} />
+                  </Link>
+                </Button>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -341,21 +611,23 @@ function ShowcaseFeatureCard({ title, description, icon: Icon, index }: { title:
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative p-8 rounded-2xl bg-card/80 border border-border/50 overflow-hidden hover:border-[#FAA1F1]/30 transition-all"
+      className="relative p-4 rounded-xl bg-card/80 border border-border/50 overflow-hidden hover:border-[#FAA1F1]/30 transition-all"
     >
       <div
-        className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 rounded-xl transition-opacity duration-300"
         style={{
-          background: `radial-gradient(300px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(250, 161, 241, 0.15), rgba(151, 174, 255, 0.1), transparent 40%)`,
+          background: `radial-gradient(200px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(250, 161, 241, 0.15), rgba(151, 174, 255, 0.1), transparent 40%)`,
           opacity: isHovered ? 1 : 0,
         }}
       />
-      <div className="relative">
-        <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center mb-5">
-          <Icon className="text-[#FAA1F1]" size={28} />
+      <div className="relative flex items-start gap-4">
+        <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center flex-shrink-0">
+          <Icon className="text-[#FAA1F1]" size={20} />
         </div>
-        <h3 className="text-xl font-semibold mb-3">{title}</h3>
-        <p className="text-muted-foreground leading-relaxed">{description}</p>
+        <div>
+          <h3 className="font-semibold mb-1">{title}</h3>
+          <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
       </div>
     </motion.div>
   );
