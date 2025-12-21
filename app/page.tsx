@@ -22,7 +22,344 @@ import {
   Shield,
   Sparkles,
   Target,
+  Download,
+  FileSpreadsheet,
+  Mail,
+  PenTool,
+  LayoutDashboard,
+  Calendar,
+  Link2,
+  FileCheck,
+  Table,
+  Send,
+  FileSignature,
+  BarChart3,
+  CalendarCheck,
+  RefreshCw,
 } from "lucide-react";
+import { AppIcon } from "@/components/AppIcon";
+
+// App showcase data
+const appShowcaseData = [
+  {
+    id: "import",
+    name: "Everyday Import",
+    icon: "import",
+    isLive: true,
+    features: [
+      {
+        title: "Import any spreadsheet in seconds",
+        description: "Upload CSV or Excel files and watch them transform into monday.com items automatically.",
+        icon: Upload,
+      },
+      {
+        title: "Smart column mapping",
+        description: "Our AI detects your columns and maps them to the right monday.com fields.",
+        icon: Table,
+      },
+      {
+        title: "Batch processing for large datasets",
+        description: "Import thousands of rows without breaking a sweat. Progress tracking included.",
+        icon: FileCheck,
+      },
+    ],
+  },
+  {
+    id: "form",
+    name: "Everyday Form",
+    icon: "form",
+    isLive: false,
+    features: [
+      {
+        title: "Build forms without coding",
+        description: "Drag and drop form builder that creates beautiful, branded forms in minutes.",
+        icon: FileSpreadsheet,
+      },
+      {
+        title: "Direct monday.com integration",
+        description: "Form submissions create items directly in your boards. No Zapier needed.",
+        icon: ArrowRight,
+      },
+      {
+        title: "Conditional logic & branching",
+        description: "Show or hide fields based on answers. Create smart, dynamic forms.",
+        icon: RefreshCw,
+      },
+    ],
+  },
+  {
+    id: "export",
+    name: "Everyday Export",
+    icon: "export",
+    isLive: false,
+    features: [
+      {
+        title: "Export to any format",
+        description: "CSV, Excel, PDF - get your data out of monday.com in the format you need.",
+        icon: Download,
+      },
+      {
+        title: "Custom export templates",
+        description: "Create reusable templates for consistent exports every time.",
+        icon: FileCheck,
+      },
+      {
+        title: "Scheduled automated exports",
+        description: "Set it and forget it. Get your reports delivered automatically.",
+        icon: Clock,
+      },
+    ],
+  },
+  {
+    id: "mail",
+    name: "Everyday Mail",
+    icon: "mail",
+    isLive: false,
+    features: [
+      {
+        title: "Trigger-based emails",
+        description: "Send emails automatically when items change status or meet conditions.",
+        icon: Send,
+      },
+      {
+        title: "Dynamic templates",
+        description: "Personalize emails with data from your monday.com items.",
+        icon: Mail,
+      },
+      {
+        title: "Track opens & clicks",
+        description: "Know when your emails are read and which links get clicked.",
+        icon: BarChart3,
+      },
+    ],
+  },
+  {
+    id: "signature",
+    name: "Everyday Signature",
+    icon: "signature",
+    isLive: false,
+    features: [
+      {
+        title: "Legally binding e-signatures",
+        description: "Collect signatures that hold up in court, directly from monday.com.",
+        icon: PenTool,
+      },
+      {
+        title: "Document templates",
+        description: "Generate contracts and documents with data from your boards.",
+        icon: FileSignature,
+      },
+      {
+        title: "Multi-party signing",
+        description: "Send documents to multiple signers with custom signing order.",
+        icon: Users,
+      },
+    ],
+  },
+  {
+    id: "dashboard",
+    name: "Everyday Dashboard",
+    icon: "dashboard",
+    isLive: false,
+    features: [
+      {
+        title: "Advanced visualizations",
+        description: "Gantt charts, heatmaps, and more - beyond monday's native widgets.",
+        icon: LayoutDashboard,
+      },
+      {
+        title: "Cross-board analytics",
+        description: "Aggregate data from multiple boards into unified dashboards.",
+        icon: BarChart3,
+      },
+      {
+        title: "Real-time updates",
+        description: "Dashboards refresh automatically as your data changes.",
+        icon: RefreshCw,
+      },
+    ],
+  },
+  {
+    id: "calendar",
+    name: "Everyday Calendar",
+    icon: "calendar",
+    isLive: false,
+    features: [
+      {
+        title: "Multi-board calendar view",
+        description: "See items from all your boards in one unified calendar.",
+        icon: Calendar,
+      },
+      {
+        title: "Resource scheduling",
+        description: "Track team availability and prevent double-booking.",
+        icon: CalendarCheck,
+      },
+      {
+        title: "Sync with Google & Outlook",
+        description: "Two-way sync keeps everything in harmony.",
+        icon: RefreshCw,
+      },
+    ],
+  },
+  {
+    id: "connect",
+    name: "Everyday Connect",
+    icon: "connect",
+    isLive: false,
+    features: [
+      {
+        title: "Connect your favorite tools",
+        description: "HubSpot, Salesforce, QuickBooks - sync them all with monday.com.",
+        icon: Link2,
+      },
+      {
+        title: "Two-way data sync",
+        description: "Changes flow both directions. Always stay in sync.",
+        icon: RefreshCw,
+      },
+      {
+        title: "No-code field mapping",
+        description: "Connect fields between apps with simple drag and drop.",
+        icon: ArrowRight,
+      },
+    ],
+  },
+];
+
+function AppShowcase() {
+  const [selectedApp, setSelectedApp] = useState(appShowcaseData[0]);
+
+  return (
+    <section className="py-20 bg-card/30 overflow-hidden">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            One Suite, Endless Possibilities
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Explore our apps designed to supercharge your monday.com experience
+          </p>
+        </motion.div>
+
+        {/* App Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="flex justify-center mb-12"
+        >
+          <div className="inline-flex flex-wrap justify-center gap-2 p-2 rounded-2xl bg-background/50 border border-border/50">
+            {appShowcaseData.map((app) => (
+              <button
+                key={app.id}
+                onClick={() => setSelectedApp(app)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                  selectedApp.id === app.id
+                    ? "bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] text-white shadow-lg"
+                    : "text-muted-foreground hover:text-foreground hover:bg-card/80"
+                }`}
+              >
+                <AppIcon icon={app.icon} size={18} />
+                <span className="hidden sm:inline">{app.name.replace("Everyday ", "")}</span>
+                {app.isLive && (
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Feature Cards */}
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            key={selectedApp.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="grid md:grid-cols-3 gap-6"
+          >
+            {selectedApp.features.map((feature, index) => (
+              <ShowcaseFeatureCard
+                key={index}
+                title={feature.title}
+                description={feature.description}
+                icon={feature.icon}
+                index={index}
+              />
+            ))}
+          </motion.div>
+
+          {/* App CTA */}
+          <motion.div
+            key={`cta-${selectedApp.id}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="text-center mt-10"
+          >
+            <Button asChild size="lg" className={selectedApp.isLive ? "bg-gradient-to-r from-[#6B8AFF] via-[#E871D8] to-[#6161FF] hover:opacity-90 border-0 text-white" : ""}>
+              <Link href={`/apps/${selectedApp.id === "import" ? "everyday-import" : `everyday-${selectedApp.id}`}`}>
+                {selectedApp.isLive ? "Get Started Free" : "Join Waiting List"}
+                <ArrowRight className="ml-2" size={16} />
+              </Link>
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ShowcaseFeatureCard({ title, description, icon: Icon, index }: { title: string; description: string; icon: React.ElementType; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.4 }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative p-8 rounded-2xl bg-card/80 border border-border/50 overflow-hidden hover:border-[#FAA1F1]/30 transition-all"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(300px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(250, 161, 241, 0.15), rgba(151, 174, 255, 0.1), transparent 40%)`,
+          opacity: isHovered ? 1 : 0,
+        }}
+      />
+      <div className="relative">
+        <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center mb-5">
+          <Icon className="text-[#FAA1F1]" size={28} />
+        </div>
+        <h3 className="text-xl font-semibold mb-3">{title}</h3>
+        <p className="text-muted-foreground leading-relaxed">{description}</p>
+      </div>
+    </motion.div>
+  );
+}
 
 function StepCard({ step, title, description, icon: Icon, index }: { step: string; title: string; description: string; icon: React.ElementType; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -133,6 +470,9 @@ export default function Home() {
   return (
     <>
       <Hero />
+
+      {/* App Showcase Section */}
+      <AppShowcase />
 
       {/* Stats Section */}
       <section className="py-16 border-y border-border/50 bg-card/30">
