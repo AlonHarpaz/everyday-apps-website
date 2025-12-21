@@ -244,7 +244,7 @@ function DashboardMockup() {
           <div className="text-sm text-muted-foreground">Real-time metrics</div>
         </div>
         <div className="flex gap-2">
-          <div className="px-3 py-1 text-xs rounded-full bg-[#97AEFF]/20 text-[#97AEFF]">This Week</div>
+          <div className="px-3 py-1 text-xs rounded-full bg-[#97AEFF]/20 text-[#97AEFF] border border-[#97AEFF]/30">This Week</div>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-3">
@@ -258,7 +258,7 @@ function DashboardMockup() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 + i * 0.1 }}
-            className="p-4 bg-card rounded-lg border border-border text-center"
+            className="p-4 bg-card rounded-lg border border-border/80 text-center"
           >
             <div className="text-2xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
             <div className="text-xs text-muted-foreground">{stat.label}</div>
@@ -269,7 +269,7 @@ function DashboardMockup() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="h-32 bg-card rounded-lg border border-border p-4"
+        className="h-32 bg-card rounded-lg border border-border/80 p-4"
       >
         <div className="flex items-end justify-between h-full gap-2">
           {[40, 65, 45, 80, 55, 70, 90].map((h, i) => (
@@ -296,14 +296,14 @@ function CalendarMockup() {
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="text-lg font-semibold">Week View</div>
-        <div className="flex gap-2 text-xs text-muted-foreground">
+        <div className="flex gap-2 text-xs text-muted-foreground border border-border/50 px-3 py-1 rounded-full">
           <span>Dec 16 - 20, 2024</span>
         </div>
       </div>
-      <div className="grid grid-cols-6 gap-1 text-xs">
+      <div className="grid grid-cols-6 gap-1 text-xs border border-border/50 rounded-lg p-3 bg-card/30">
         <div />
         {days.map((day) => (
-          <div key={day} className="text-center text-muted-foreground py-2">{day}</div>
+          <div key={day} className="text-center text-muted-foreground py-2 font-medium">{day}</div>
         ))}
         {hours.map((hour, hi) => (
           <>
@@ -314,7 +314,7 @@ function CalendarMockup() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.1 + (hi * 5 + di) * 0.02 }}
-                className="h-12 bg-card border border-border rounded relative"
+                className="h-12 bg-card border border-border/80 rounded relative"
               >
                 {hi === 0 && di === 1 && (
                   <div className="absolute inset-1 rounded bg-[#97AEFF]/30 border-l-2 border-[#97AEFF] px-1 text-[10px]">
@@ -348,7 +348,7 @@ function TimesheetMockup() {
   ];
   return (
     <div className="p-6">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 p-4 bg-card/50 rounded-lg border border-border/50">
         <div>
           <div className="text-lg font-semibold">Today&apos;s Time</div>
           <div className="text-sm text-muted-foreground">Monday, Dec 16</div>
@@ -365,7 +365,7 @@ function TimesheetMockup() {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 + i * 0.1 }}
-            className="flex items-center gap-3 p-3 bg-card rounded-lg border border-border"
+            className="flex items-center gap-3 p-3 bg-card rounded-lg border border-border/80"
           >
             <div className={`w-3 h-3 rounded-full ${entry.status === "running" ? "bg-green-500 animate-pulse" : "bg-muted-foreground"}`} />
             <div className="flex-1">
@@ -373,7 +373,7 @@ function TimesheetMockup() {
             </div>
             <div className="text-lg font-mono font-semibold">{entry.hours}</div>
             {entry.status === "running" && (
-              <button className="px-2 py-1 text-xs bg-red-500/20 text-red-500 rounded">Stop</button>
+              <button className="px-2 py-1 text-xs bg-red-500/20 text-red-500 rounded border border-red-500/30">Stop</button>
             )}
           </motion.div>
         ))}
@@ -382,7 +382,7 @@ function TimesheetMockup() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
-        className="w-full mt-4 py-2.5 rounded-lg text-sm font-medium bg-[#FAA1F1] text-white"
+        className="w-full mt-4 py-2.5 rounded-lg text-sm font-medium bg-[#FAA1F1] text-white border border-[#FAA1F1]"
       >
         + Start New Timer
       </motion.button>
@@ -398,7 +398,10 @@ function ConnectMockup() {
   ];
   return (
     <div className="p-6">
-      <div className="text-lg font-semibold mb-4">Connected Apps</div>
+      <div className="flex items-center justify-between mb-4">
+        <div className="text-lg font-semibold">Connected Apps</div>
+        <div className="px-3 py-1 text-xs rounded-full bg-green-500/20 text-green-500 border border-green-500/30">3 Active</div>
+      </div>
       <div className="space-y-3">
         {integrations.map((app, i) => (
           <motion.div
@@ -406,11 +409,11 @@ function ConnectMockup() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 + i * 0.1 }}
-            className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border"
+            className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border/80"
           >
             <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm"
-              style={{ backgroundColor: app.color }}
+              className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm border"
+              style={{ backgroundColor: app.color, borderColor: `${app.color}80` }}
             >
               {app.name[0]}
             </div>
@@ -418,10 +421,10 @@ function ConnectMockup() {
               <div className="font-medium">{app.name}</div>
               <div className="text-xs text-muted-foreground">Last sync: 2 min ago</div>
             </div>
-            <div className={`px-2 py-1 rounded-full text-xs ${
+            <div className={`px-2 py-1 rounded-full text-xs border ${
               app.status === "connected"
-                ? "bg-green-500/20 text-green-500"
-                : "bg-yellow-500/20 text-yellow-500"
+                ? "bg-green-500/20 text-green-500 border-green-500/30"
+                : "bg-yellow-500/20 text-yellow-500 border-yellow-500/30"
             }`}>
               {app.status === "connected" ? "Connected" : "Setup"}
             </div>
@@ -432,10 +435,10 @@ function ConnectMockup() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
-        className="mt-4 p-4 border-2 border-dashed border-border rounded-lg text-center"
+        className="mt-4 p-4 border-2 border-dashed border-[#97AEFF]/50 rounded-lg text-center hover:border-[#97AEFF] hover:bg-[#97AEFF]/5 transition-all cursor-pointer"
       >
-        <Link2 className="mx-auto mb-2 text-muted-foreground" size={24} />
-        <div className="text-sm text-muted-foreground">+ Add Integration</div>
+        <Link2 className="mx-auto mb-2 text-[#97AEFF]" size={24} />
+        <div className="text-sm text-[#97AEFF]">+ Add Integration</div>
       </motion.div>
     </div>
   );
@@ -517,10 +520,14 @@ function AppShowcase() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4 }}
-              className="relative rounded-2xl bg-background border border-border/50 overflow-hidden shadow-2xl"
+              className="relative rounded-2xl bg-background overflow-hidden shadow-2xl"
             >
+              {/* Gradient border wrapper */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#97AEFF]/50 via-[#FAA1F1]/30 to-[#6161FF]/50 p-[1px]">
+                <div className="absolute inset-[1px] rounded-[15px] bg-background" />
+              </div>
               {/* Window controls */}
-              <div className="flex items-center gap-2 px-4 py-3 bg-card/50 border-b border-border/50">
+              <div className="relative flex items-center gap-2 px-4 py-3 bg-card/50 border-b border-border/50">
                 <div className="w-3 h-3 rounded-full bg-red-500/80" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
                 <div className="w-3 h-3 rounded-full bg-green-500/80" />
@@ -529,7 +536,7 @@ function AppShowcase() {
                 </div>
               </div>
               {/* Mockup content */}
-              <div className="min-h-[400px]">
+              <div className="relative min-h-[400px] bg-background">
                 {MockupComponent && <MockupComponent />}
               </div>
             </motion.div>
