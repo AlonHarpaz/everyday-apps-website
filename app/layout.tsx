@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { CookieConsent } from "@/components/CookieConsent";
-import { CrispChat } from "@/components/CrispChat";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -33,8 +32,24 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <CookieConsent />
-        <CrispChat />
+        <Script
+          id="crisp-chat"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.$crisp=[];
+              window.CRISP_WEBSITE_ID="60dfdb2e-dd05-4e28-b98a-7c88c7f4b9e1";
+
+              (function(){
+                d=document;
+                s=d.createElement("script");
+                s.src="https://client.crisp.chat/l.js";
+                s.async=1;
+                d.getElementsByTagName("head")[0].appendChild(s);
+              })();
+            `,
+          }}
+        />
       </body>
     </html>
   );
