@@ -50,7 +50,6 @@ const resources = [
   { name: "Documentation", href: "/docs" },
   { name: "Getting Started", href: "/docs/everyday-import" },
   { name: "API Reference", href: "/docs" },
-  { name: "Blog", href: "/about" },
   { name: "Support", href: "/contact" },
 ];
 

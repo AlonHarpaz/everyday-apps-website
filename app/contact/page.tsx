@@ -1,9 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+declare global {
+  interface Window {
+    $crisp: unknown[];
+  }
+}
 
 export default function ContactPage() {
+  const openChat = () => {
+    if (typeof window !== "undefined" && window.$crisp) {
+      window.$crisp.push(["do", "chat:open"]);
+    }
+  };
+
   return (
     <div className="py-20">
       <div className="container mx-auto px-4 md:px-8 lg:px-12">
@@ -16,12 +29,12 @@ export default function ContactPage() {
         >
           <h1 className="text-4xl md:text-5xl font-light mb-4">Contact Us</h1>
           <p className="text-muted-foreground text-lg">
-            Have questions? We&apos;d love to hear from you. Fill out the form below
+            Have questions? We&apos;d love to hear from you. Reach out to us
             and we&apos;ll get back to you as soon as possible.
           </p>
         </motion.div>
 
-        {/* Form Container */}
+        {/* Contact Options */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -29,29 +42,24 @@ export default function ContactPage() {
           className="max-w-2xl mx-auto"
         >
           <div className="rounded-xl bg-card/50 border border-border/50 p-8">
-            {/* monday.com Form Embed Placeholder */}
-            <div className="text-center py-12">
-              <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <Mail className="text-primary" size={24} />
+            <div className="text-center py-8">
+              <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center mx-auto mb-6">
+                <MessageCircle className="text-[#FAA1F1]" size={32} />
               </div>
-              <p className="text-muted-foreground mb-4">
-                monday.com form will be embedded here
+              <h2 className="text-2xl font-light mb-3">Chat with us</h2>
+              <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+                Our support team is here to help. Start a conversation and we&apos;ll respond as quickly as possible.
               </p>
-              <p className="text-sm text-muted-foreground">
-                Replace this placeholder with your monday.com form embed code
-              </p>
-
-              {/* Example embed code structure:
-              <iframe
-                src="https://forms.monday.com/forms/embed/YOUR_FORM_ID"
-                width="100%"
-                height="600"
-                style={{ border: 0 }}
-              />
-              */}
+              <Button
+                onClick={openChat}
+                size="lg"
+                className="bg-gradient-to-r from-[#6B8AFF] via-[#E871D8] to-[#6161FF] hover:opacity-90 border-0 text-white px-8"
+              >
+                <MessageCircle className="mr-2" size={20} />
+                Start a Conversation
+              </Button>
             </div>
           </div>
-
         </motion.div>
       </div>
     </div>

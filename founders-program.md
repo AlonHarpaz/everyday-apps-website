@@ -19,4 +19,45 @@ We're building a comprehensive suite of productivity apps for the monday.com eco
 - Enterprise security (SOC 2 compliant, network isolation)
 - Multi-region deployment (US, EU, AU)
 - 99.9% uptime
-- Apps: Import, Export, Forms, Mail, Signature, Dashboard, Calendar, Sync, Connect
+
+---
+
+## App Taglines
+
+### Data Management
+| App | Tagline |
+|-----|---------|
+| **Everyday Import** | Bring your data into monday.com in seconds |
+| **Everyday Export** | Take your monday.com data anywhere |
+| **Everyday Sync** | Keep your spreadsheets and monday.com in perfect harmony |
+| **Everyday Backup** | Never lose your monday.com data again |
+
+### Communication
+| App | Tagline |
+|-----|---------|
+| **Everyday Mail** | Automate emails directly from your boards |
+| **Everyday Signature** | Get documents signed without leaving monday.com |
+| **Everyday Form** | Beautiful forms that feed straight into your boards |
+
+### Analytics & Reporting
+| App | Tagline |
+|-----|---------|
+| **Everyday Dashboard** | Visualize your data beyond native monday widgets |
+| **Everyday Marketing** | Your marketing command center inside monday.com |
+
+### Scheduling & Time
+| App | Tagline |
+|-----|---------|
+| **Everyday Calendar** | Unified scheduling across all your boards |
+| **Everyday Timesheet** | Track time and get approvals effortlessly |
+
+### Integrations
+| App | Tagline |
+|-----|---------|
+| **Everyday Connect** | Bridge monday.com with the tools you already use |
+
+### Operations
+| App | Tagline |
+|-----|---------|
+| **Everyday Inventory** | Turn monday.com into your inventory system |
+| **Everyday Security** | Enterprise-grade security for your workspace |
