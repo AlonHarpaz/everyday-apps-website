@@ -10,19 +10,37 @@ export function CookieConsent() {
 
   useEffect(() => {
     const consent = localStorage.getItem("cookie-consent");
-    if (!consent) {
-      setIsVisible(true);
-    }
+    if (consent) return;
+
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPosition = window.scrollY;
+      const scrollPercentage = (scrollPosition / scrollHeight) * 100;
+
+      if (scrollPercentage >= 50) {
+        setIsVisible(true);
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Check initial scroll position in case user refreshes mid-page
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const acceptAll = () => {
     localStorage.setItem("cookie-consent", "all");
     setIsVisible(false);
+    // Notify other components that consent was given
+    window.dispatchEvent(new Event("cookie-consent-updated"));
   };
 
   const acceptNecessary = () => {
     localStorage.setItem("cookie-consent", "necessary");
     setIsVisible(false);
+    window.dispatchEvent(new Event("cookie-consent-updated"));
   };
 
   return (
@@ -33,44 +51,40 @@ export function CookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/95 backdrop-blur-lg"
+          className="fixed bottom-4 left-4 right-4 md:right-auto md:left-6 md:max-w-md z-50 rounded-2xl bg-[#1a1a3e] shadow-2xl"
         >
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-muted-foreground">
-                We use cookies to ensure you have the best experience on our site, to analyze traffic, and enhance our marketing activities.{" "}
-                <Link href="/privacy" className="text-foreground underline hover:no-underline">
-                  Cookie Policy
-                </Link>{" "}
-                <Link href="/terms" className="text-foreground underline hover:no-underline">
-                  Terms of Service
-                </Link>
-              </p>
-              <div className="flex flex-wrap items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={acceptNecessary}
-                  className="whitespace-nowrap"
-                >
-                  Accept necessary cookies only
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={acceptNecessary}
-                  className="whitespace-nowrap"
-                >
-                  Cookie settings
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={acceptAll}
-                  className="whitespace-nowrap bg-[#00CA72] hover:bg-[#00b066] text-white"
-                >
-                  Accept all cookies
-                </Button>
-              </div>
+          <div className="p-8 relative">
+            {/* Close button */}
+            <button
+              onClick={acceptNecessary}
+              className="absolute top-4 right-4 text-[#6161FF] hover:text-[#6161FF]/80 transition-colors"
+              aria-label="Close"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+
+            <p className="text-white/90 text-base leading-relaxed mb-8 pr-6">
+              This website uses cookies and tracking tools to improve your experience and analyze site performance. We share usage data with social media, advertising, and analytics partners. If an opt-out signal is detected, we will honor it. Learn more in our{" "}
+              <Link href="/privacy" className="text-[#6161FF] hover:text-[#6161FF]/80 underline">
+                Privacy Policy.
+              </Link>
+            </p>
+
+            <div className="flex flex-col items-center gap-4">
+              <Button
+                onClick={acceptAll}
+                className="w-full bg-[#FAA1F1] hover:bg-[#FAA1F1]/90 text-black font-medium py-6 rounded-full text-base"
+              >
+                Acknowledge
+              </Button>
+              <button
+                onClick={acceptNecessary}
+                className="text-white underline hover:text-white/80 transition-colors"
+              >
+                Cookies Settings
+              </button>
             </div>
           </div>
         </motion.div>
