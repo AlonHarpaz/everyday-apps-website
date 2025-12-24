@@ -147,9 +147,9 @@ export function AppCard({ app, index = 0 }: AppCardProps) {
           <h3 className="text-xl font-semibold mb-4">{app.name}</h3>
 
           {/* Use Cases / Features */}
-          <div className="space-y-2 text-left">
+          <div className="space-y-2">
             {app.features.slice(0, 3).map((feature, i) => (
-              <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div key={i} className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#FAA1F1] flex-shrink-0" />
                 <span className="line-clamp-1">{feature}</span>
               </div>
