@@ -22,8 +22,6 @@ export function AppSlider({ apps, title, showNavigation = true, fullWidth = fals
 
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -35,7 +33,6 @@ export function AppSlider({ apps, title, showNavigation = true, fullWidth = fals
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
     setCanScrollPrev(emblaApi.canScrollPrev());
     setCanScrollNext(emblaApi.canScrollNext());
   }, [emblaApi]);
@@ -43,7 +40,6 @@ export function AppSlider({ apps, title, showNavigation = true, fullWidth = fals
   useEffect(() => {
     if (!emblaApi) return;
     onSelect();
-    setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
     return () => {
@@ -80,7 +76,7 @@ export function AppSlider({ apps, title, showNavigation = true, fullWidth = fals
 
       {/* Navigation - Below carousel */}
       {showNavigation && (
-        <div className="flex items-center justify-center gap-6 mt-10">
+        <div className="flex items-center justify-center gap-4 mt-10">
           {/* Previous Button */}
           <button
             onClick={scrollPrev}
@@ -93,21 +89,6 @@ export function AppSlider({ apps, title, showNavigation = true, fullWidth = fals
           >
             <ChevronLeft size={24} strokeWidth={2} />
           </button>
-
-          {/* Dots indicator */}
-          <div className="flex items-center gap-2">
-            {scrollSnaps.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => emblaApi?.scrollTo(index)}
-                className={`rounded-full transition-all ${
-                  index === selectedIndex
-                    ? "w-10 h-3 bg-gradient-to-r from-[#97AEFF] to-[#FAA1F1]"
-                    : "w-3 h-3 bg-muted-foreground/20 hover:bg-muted-foreground/40"
-                }`}
-              />
-            ))}
-          </div>
 
           {/* Next Button */}
           <button

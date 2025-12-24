@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { AnimatedSparkle } from "@/components/AnimatedSparkle";
 import { AppIcon } from "@/components/AppIcon";
 
@@ -58,6 +58,7 @@ export function Header() {
   const navRef = useRef<HTMLElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!headerRef.current) return;
@@ -323,8 +324,8 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-4">
-          {/* Gradient border button */}
-          <div className="relative p-[2px] rounded-full bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] hover:opacity-80 transition-opacity">
+          {/* Gradient border button - hidden on mobile */}
+          <div className="hidden md:block relative p-[2px] rounded-full bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] hover:opacity-80 transition-opacity">
             <Link
               href="/apps"
               className="block px-5 py-2 rounded-full bg-background text-sm font-medium text-white hover:bg-background/90 transition-colors"
@@ -332,8 +333,60 @@ export function Header() {
               Get Started
             </Link>
           </div>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-border/40 bg-background/95 backdrop-blur-lg">
+          <nav className="container mx-auto px-4 py-4 space-y-1">
+            <Link
+              href="/apps"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 text-base font-medium text-foreground hover:bg-white/5 rounded-lg transition-all"
+            >
+              Apps
+            </Link>
+            <Link
+              href="/pricing"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 text-base font-medium text-foreground hover:bg-white/5 rounded-lg transition-all"
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/docs"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 text-base font-medium text-foreground hover:bg-white/5 rounded-lg transition-all"
+            >
+              Documentation
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 text-base font-medium text-foreground hover:bg-white/5 rounded-lg transition-all"
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 text-base font-medium text-foreground hover:bg-white/5 rounded-lg transition-all"
+            >
+              Contact
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

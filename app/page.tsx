@@ -819,22 +819,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="container mx-auto px-4 md:px-8 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-            className="text-center mt-10"
-          >
-            <Button asChild variant="outline" size="lg">
-              <Link href="/apps">
-                View All Apps <ArrowRight className="ml-2" size={16} />
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
+        </section>
 
       {/* Why Choose Us Section */}
       <section className="py-20">
