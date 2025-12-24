@@ -71,7 +71,10 @@ export function ImportMockup({ product, useCases }: ImportMockupProps) {
           transition={{ delay: 0.2 }}
           className="flex items-center gap-2"
         >
-          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground font-medium">
+          <div
+            className="w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-white font-medium"
+            style={{ backgroundColor: productColor }}
+          >
             <Check size={14} />
           </div>
           <span className="text-muted-foreground hidden sm:inline">Upload</span>

@@ -41,6 +41,7 @@ export default function RootLayout({
             __html: `
               window.$crisp=[];
               window.CRISP_WEBSITE_ID="60dfdb2e-dd05-4e28-b98a-7c88c7f4b9e1";
+
               (function(){
                 d=document;
                 s=d.createElement("script");

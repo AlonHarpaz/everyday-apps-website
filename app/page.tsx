@@ -2,8 +2,10 @@
 
 import { useRef, useState } from "react";
 import { Hero } from "@/components/Hero";
-import { AppCard } from "@/components/AppCard";
 import { TrustSection } from "@/components/TrustSection";
+import { NewsletterSection } from "@/components/NewsletterSection";
+import { BentoGrid } from "@/components/BentoGrid";
+import { FAQ } from "@/components/FAQ";
 import { liveApps, comingSoonApps } from "@/lib/apps";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -21,6 +23,7 @@ import {
   Clock,
   Shield,
   Sparkles,
+  Sparkle,
   Target,
   Download,
   FileSpreadsheet,
@@ -36,8 +39,12 @@ import {
   BarChart3,
   CalendarCheck,
   RefreshCw,
+  MessageSquare,
+  Share2,
 } from "lucide-react";
-import { AppIcon } from "@/components/AppIcon";
+import { AppIcon, AppIconWithBorder } from "@/components/AppIcon";
+import { AppSlider } from "@/components/AppSlider";
+import { AppsShowcaseGrid } from "@/components/AppsShowcaseGrid";
 import {
   ImportMockup,
   FormMockup,
@@ -46,189 +53,120 @@ import {
   SignatureMockup,
 } from "@/components/mockups";
 
-// App showcase data
+// App showcase data - Categories
 const appShowcaseData = [
   {
-    id: "import",
-    name: "Everyday Import",
+    id: "data",
+    name: "Data Management",
     icon: "import",
     isLive: true,
     features: [
       {
-        title: "Import any spreadsheet in seconds",
-        description: "Upload CSV or Excel files and watch them transform into monday.com items automatically.",
+        title: "Import from any source",
+        description: "CSV, Excel, Google Sheets - bring all your data into monday.com effortlessly.",
         icon: Upload,
       },
       {
-        title: "Smart column mapping",
-        description: "Our AI detects your columns and maps them to the right monday.com fields.",
-        icon: Table,
+        title: "Export to any format",
+        description: "Generate reports in PDF, Excel, or CSV for stakeholders and backups.",
+        icon: Download,
       },
       {
-        title: "Batch processing for large datasets",
-        description: "Import thousands of rows without breaking a sweat. Progress tracking included.",
-        icon: FileCheck,
-      },
-    ],
-  },
-  {
-    id: "form",
-    name: "Everyday Form",
-    icon: "form",
-    isLive: false,
-    features: [
-      {
-        title: "Build forms without coding",
-        description: "Drag and drop form builder that creates beautiful, branded forms in minutes.",
-        icon: FileSpreadsheet,
-      },
-      {
-        title: "Direct monday.com integration",
-        description: "Form submissions create items directly in your boards. No Zapier needed.",
-        icon: ArrowRight,
-      },
-      {
-        title: "Conditional logic & branching",
-        description: "Show or hide fields based on answers. Create smart, dynamic forms.",
+        title: "Two-way sync",
+        description: "Keep external spreadsheets and monday.com in perfect harmony.",
         icon: RefreshCw,
       },
     ],
   },
   {
-    id: "export",
-    name: "Everyday Export",
-    icon: "export",
+    id: "communication",
+    name: "Communication",
+    icon: "mail",
     isLive: false,
     features: [
       {
-        title: "Export to any format",
-        description: "CSV, Excel, PDF - get your data out of monday.com in the format you need.",
-        icon: Download,
+        title: "Automated emails",
+        description: "Send updates, reminders, and notifications based on board changes.",
+        icon: Send,
       },
       {
-        title: "Custom export templates",
-        description: "Create reusable templates for consistent exports every time.",
-        icon: FileCheck,
+        title: "E-signatures",
+        description: "Collect legally binding signatures on contracts and approvals.",
+        icon: PenTool,
       },
       {
-        title: "Scheduled automated exports",
-        description: "Set it and forget it. Get your reports delivered automatically.",
+        title: "Form submissions",
+        description: "Capture leads, feedback, and requests directly into your boards.",
+        icon: FileSpreadsheet,
+      },
+    ],
+  },
+  {
+    id: "analytics",
+    name: "Analytics & Reporting",
+    icon: "dashboard",
+    isLive: false,
+    features: [
+      {
+        title: "Advanced dashboards",
+        description: "Visualize KPIs with charts and widgets beyond native monday features.",
+        icon: LayoutDashboard,
+      },
+      {
+        title: "Cross-board insights",
+        description: "Aggregate data from multiple boards into unified reports.",
+        icon: BarChart3,
+      },
+      {
+        title: "Scheduled reports",
+        description: "Automatically generate and deliver reports on a schedule.",
         icon: Clock,
       },
     ],
   },
   {
-    id: "mail",
-    name: "Everyday Mail",
-    icon: "mail",
-    isLive: false,
-    features: [
-      {
-        title: "Trigger-based emails",
-        description: "Send emails automatically when items change status or meet conditions.",
-        icon: Send,
-      },
-      {
-        title: "Dynamic templates",
-        description: "Personalize emails with data from your monday.com items.",
-        icon: Mail,
-      },
-      {
-        title: "Track opens & clicks",
-        description: "Know when your emails are read and which links get clicked.",
-        icon: BarChart3,
-      },
-    ],
-  },
-  {
-    id: "signature",
-    name: "Everyday Signature",
-    icon: "signature",
-    isLive: false,
-    features: [
-      {
-        title: "Legally binding e-signatures",
-        description: "Collect signatures that hold up in court, directly from monday.com.",
-        icon: PenTool,
-      },
-      {
-        title: "Document templates",
-        description: "Generate contracts and documents with data from your boards.",
-        icon: FileSignature,
-      },
-      {
-        title: "Multi-party signing",
-        description: "Send documents to multiple signers with custom signing order.",
-        icon: Users,
-      },
-    ],
-  },
-  {
-    id: "dashboard",
-    name: "Everyday Dashboard",
-    icon: "dashboard",
-    isLive: false,
-    features: [
-      {
-        title: "Advanced visualizations",
-        description: "Gantt charts, heatmaps, and more - beyond monday's native widgets.",
-        icon: LayoutDashboard,
-      },
-      {
-        title: "Cross-board analytics",
-        description: "Aggregate data from multiple boards into unified dashboards.",
-        icon: BarChart3,
-      },
-      {
-        title: "Real-time updates",
-        description: "Dashboards refresh automatically as your data changes.",
-        icon: RefreshCw,
-      },
-    ],
-  },
-  {
-    id: "calendar",
-    name: "Everyday Calendar",
+    id: "scheduling",
+    name: "Scheduling & Planning",
     icon: "calendar",
     isLive: false,
     features: [
       {
-        title: "Multi-board calendar view",
-        description: "See items from all your boards in one unified calendar.",
+        title: "Resource management",
+        description: "Track team availability and prevent overbooking.",
+        icon: Users,
+      },
+      {
+        title: "Calendar sync",
+        description: "Two-way sync with Google Calendar and Outlook.",
         icon: Calendar,
       },
       {
-        title: "Resource scheduling",
-        description: "Track team availability and prevent double-booking.",
-        icon: CalendarCheck,
-      },
-      {
-        title: "Sync with Google & Outlook",
-        description: "Two-way sync keeps everything in harmony.",
-        icon: RefreshCw,
+        title: "Time tracking",
+        description: "Log hours against tasks with approval workflows.",
+        icon: Clock,
       },
     ],
   },
   {
-    id: "connect",
-    name: "Everyday Connect",
+    id: "integrations",
+    name: "Integrations",
     icon: "connect",
     isLive: false,
     features: [
       {
-        title: "Connect your favorite tools",
-        description: "HubSpot, Salesforce, QuickBooks - sync them all with monday.com.",
+        title: "CRM sync",
+        description: "Connect HubSpot, Salesforce, and Pipedrive with monday.com.",
         icon: Link2,
       },
       {
-        title: "Two-way data sync",
-        description: "Changes flow both directions. Always stay in sync.",
-        icon: RefreshCw,
+        title: "Accounting tools",
+        description: "Sync with QuickBooks and Xero for invoicing automation.",
+        icon: FileCheck,
       },
       {
-        title: "No-code field mapping",
-        description: "Connect fields between apps with simple drag and drop.",
-        icon: ArrowRight,
+        title: "Marketing platforms",
+        description: "Connect Mailchimp, ActiveCampaign, and more.",
+        icon: Target,
       },
     ],
   },
@@ -260,7 +198,7 @@ function DashboardMockup() {
             transition={{ delay: 0.2 + i * 0.1 }}
             className="p-4 bg-card rounded-lg border border-border/80 text-center"
           >
-            <div className="text-2xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
+            <div className="text-2xl font-light" style={{ color: stat.color }}>{stat.value}</div>
             <div className="text-xs text-muted-foreground">{stat.label}</div>
           </motion.div>
         ))}
@@ -354,7 +292,7 @@ function TimesheetMockup() {
           <div className="text-sm text-muted-foreground">Monday, Dec 16</div>
         </div>
         <div className="text-right">
-          <div className="text-2xl font-bold text-[#FAA1F1]">7:15</div>
+          <div className="text-2xl font-light text-[#FAA1F1]">7:15</div>
           <div className="text-xs text-muted-foreground">hours logged</div>
         </div>
       </div>
@@ -412,7 +350,7 @@ function ConnectMockup() {
             className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border/80"
           >
             <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm border"
+              className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-light text-sm border"
               style={{ backgroundColor: app.color, borderColor: `${app.color}80` }}
             >
               {app.name[0]}
@@ -446,15 +384,11 @@ function ConnectMockup() {
 
 // Map app IDs to mockup components
 const mockupComponents: Record<string, React.ComponentType> = {
-  import: ImportMockup,
-  form: FormMockup,
-  export: ExportMockup,
-  mail: MailMockup,
-  signature: SignatureMockup,
-  dashboard: DashboardMockup,
-  calendar: CalendarMockup,
-  timesheet: TimesheetMockup,
-  connect: ConnectMockup,
+  data: ImportMockup,
+  communication: MailMockup,
+  analytics: DashboardMockup,
+  scheduling: CalendarMockup,
+  integrations: ConnectMockup,
 };
 
 function AppShowcase() {
@@ -462,16 +396,16 @@ function AppShowcase() {
   const MockupComponent = mockupComponents[selectedApp.id];
 
   return (
-    <section className="py-20 bg-card/30 overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section className="py-24 overflow-hidden">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-4xl md:text-6xl font-light mb-6">
             One Suite, Endless Possibilities
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -479,117 +413,158 @@ function AppShowcase() {
           </p>
         </motion.div>
 
-        {/* App Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1, duration: 0.6 }}
-          className="flex justify-center mb-12"
-        >
-          <div className="inline-flex flex-wrap justify-center gap-2 p-2 rounded-2xl bg-background/50 border border-border/50">
-            {appShowcaseData.map((app) => (
-              <button
-                key={app.id}
-                onClick={() => setSelectedApp(app)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                  selectedApp.id === app.id
-                    ? "bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] text-white shadow-lg"
-                    : "text-muted-foreground hover:text-foreground hover:bg-card/80"
-                }`}
+        {/* Main Layout - Sidebar + Content */}
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8">
+          {/* Vertical Sidebar Tabs */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="md:w-64 flex-shrink-0"
+          >
+            <div className="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
+              {appShowcaseData.map((app) => (
+                <button
+                  key={app.id}
+                  onClick={() => setSelectedApp(app)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all whitespace-nowrap w-full text-left ${
+                    selectedApp.id === app.id
+                      ? "bg-white/10 text-white border border-white/20"
+                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                  }`}
+                >
+                  <AppIcon icon={app.icon} size={20} />
+                  <span>{app.name}</span>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Content Area */}
+          <div className="flex-1">
+            {/* Video for Data Management */}
+            {selectedApp.id === "data" && (
+              <motion.div
+                key="video-data"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="mb-8 relative rounded-2xl overflow-hidden border border-white/10"
               >
-                <AppIcon icon={app.icon} size={18} />
-                <span className="hidden sm:inline">{app.name.replace("Everyday ", "")}</span>
-                {app.isLive && (
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        </motion.div>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-auto max-h-[300px] object-cover" style={{ objectPosition: 'center 80%' }}
+                >
+                  <source src="https://dapulse-res.cloudinary.com/video/upload/v1739947887/remote_mondaycom_static/uploads/Yotam_Ron/ai-2025/hero_bg_3_wm.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+              </motion.div>
+            )}
 
-        {/* Mockup + Features Grid */}
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
-            {/* Mockup */}
-            <motion.div
-              key={`mockup-${selectedApp.id}`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-              className="relative rounded-2xl bg-background overflow-hidden shadow-2xl"
-            >
-              {/* Gradient border wrapper */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#97AEFF]/50 via-[#FAA1F1]/30 to-[#6161FF]/50 p-[1px]">
-                <div className="absolute inset-[1px] rounded-[15px] bg-background" />
-              </div>
-              {/* Window controls */}
-              <div className="relative flex items-center gap-2 px-4 py-3 bg-card/50 border-b border-border/50">
-                <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                <div className="flex-1 text-center">
-                  <span className="text-xs text-muted-foreground">{selectedApp.name}</span>
-                </div>
-              </div>
-              {/* Mockup content */}
-              <div className="relative min-h-[400px] bg-background">
-                {MockupComponent && <MockupComponent />}
-              </div>
-            </motion.div>
+            {/* Image for Communication */}
+            {selectedApp.id === "communication" && (
+              <motion.div
+                key="image-communication"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="mb-8 relative rounded-2xl overflow-hidden border border-white/10 flex justify-center"
+                style={{ background: 'linear-gradient(to bottom, #0f1535 0%, #080d24 50%, #020408 100%)' }}
+              >
+                <img
+                  src="/Mobile_communication.avif"
+                  alt="Communication features"
+                  className="w-auto h-auto max-h-[300px] object-contain"
+                />
+              </motion.div>
+            )}
 
-            {/* Feature Cards */}
+            {/* Video for Analytics & Reporting */}
+            {selectedApp.id === "analytics" && (
+              <motion.div
+                key="video-analytics"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="mb-8 relative rounded-2xl overflow-hidden border border-white/10"
+              >
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-auto max-h-[300px] object-cover" style={{ objectPosition: 'center 80%' }}
+                >
+                  <source src="https://dapulse-res.cloudinary.com/video/upload/v1741088998/remote_mondaycom_static/uploads/Yotam_Ron/ai-2025/hero_bg_1_wm-v2.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+              </motion.div>
+            )}
+
+            {/* Video for Integrations */}
+            {selectedApp.id === "integrations" && (
+              <motion.div
+                key="video-integrations"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="mb-8 relative rounded-2xl overflow-hidden border border-white/10"
+              >
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-auto max-h-[300px] object-cover" style={{ objectPosition: 'center 20%' }}
+                >
+                  <source src="https://dapulse-res.cloudinary.com/video/upload/v1738573581/remote_mondaycom_static/uploads/Yotam_Ron/ai-2025/01_AI_blocks_Workflows_LOOP.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+              </motion.div>
+            )}
+
+            {/* Features Grid */}
             <motion.div
               key={`features-${selectedApp.id}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="space-y-4"
+              className="grid sm:grid-cols-3 gap-4 mb-8"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center">
-                  <AppIcon icon={selectedApp.icon} size={24} className="text-[#FAA1F1]" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold">{selectedApp.name}</h3>
-                  <div className="flex items-center gap-2">
-                    {selectedApp.isLive ? (
-                      <span className="inline-flex items-center gap-1.5 text-xs text-green-500">
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        Live on Marketplace
-                      </span>
-                    ) : (
-                      <span className="text-xs text-muted-foreground">Coming Soon</span>
-                    )}
+              {selectedApp.features.map((feature, index) => {
+                const Icon = feature.icon;
+                return (
+                  <div
+                    key={index}
+                    className="p-6 rounded-2xl bg-card/30 border border-white/10"
+                  >
+                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center mb-4">
+                      <Icon className="text-[#FAA1F1]" size={24} />
+                    </div>
+                    <h4 className="text-base font-medium mb-2">{feature.title}</h4>
+                    <p className="text-muted-foreground text-sm">{feature.description}</p>
                   </div>
-                </div>
-              </div>
+                );
+              })}
+            </motion.div>
 
-              {selectedApp.features.map((feature, index) => (
-                <ShowcaseFeatureCard
-                  key={index}
-                  title={feature.title}
-                  description={feature.description}
-                  icon={feature.icon}
-                  index={index}
-                />
-              ))}
-
-              {/* App CTA */}
-              <div className="pt-4">
-                <Button asChild size="lg" className={`w-full ${selectedApp.isLive ? "bg-gradient-to-r from-[#6B8AFF] via-[#E871D8] to-[#6161FF] hover:opacity-90 border-0 text-white" : ""}`}>
-                  <Link href={`/apps/${selectedApp.id === "import" ? "everyday-import" : `everyday-${selectedApp.id}`}`}>
-                    {selectedApp.isLive ? "Get Started Free" : "Join Waiting List"}
-                    <ArrowRight className="ml-2" size={16} />
-                  </Link>
-                </Button>
-              </div>
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-center"
+            >
+              <Button asChild size="lg" className="bg-gradient-to-r from-[#6B8AFF] via-[#E871D8] to-[#6161FF] hover:opacity-90 border-0 text-white px-8">
+                <Link href="/apps">
+                  Explore All Apps
+                  <Sparkle className="ml-1 -mt-1 fill-current w-[6px] h-[6px]" />
+                </Link>
+              </Button>
             </motion.div>
           </div>
         </div>
@@ -661,24 +636,24 @@ function StepCard({ step, title, description, icon: Icon, index }: { step: strin
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative p-6 rounded-xl bg-card/50 border border-border/50 overflow-hidden hover:border-[#FAA1F1]/30 transition-colors"
+      className="relative p-8 rounded-2xl bg-card/50 border border-border/50 overflow-hidden hover:border-[#FAA1F1]/30 transition-colors"
     >
       <div
-        className="pointer-events-none absolute inset-0 rounded-xl transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
         style={{
           background: `radial-gradient(250px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(250, 161, 241, 0.12), rgba(151, 174, 255, 0.08), transparent 40%)`,
           opacity: isHovered ? 1 : 0,
         }}
       />
       <div className="relative">
-        <div className="flex items-center gap-4 mb-4">
-          <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center">
-            <Icon className="text-[#FAA1F1]" size={24} />
+        <div className="flex items-center gap-4 mb-5">
+          <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-[#97AEFF]/20 to-[#FAA1F1]/20 flex items-center justify-center">
+            <Icon className="text-[#FAA1F1]" size={28} />
           </div>
-          <span className="text-sm font-medium text-[#97AEFF]">{step}</span>
+          <span className="text-base font-medium text-[#97AEFF]">{step}</span>
         </div>
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-muted-foreground">{description}</p>
+        <h3 className="text-2xl font-semibold mb-3">{title}</h3>
+        <p className="text-muted-foreground text-base">{description}</p>
       </div>
     </motion.div>
   );
@@ -691,15 +666,15 @@ function StatCard({ value, label, icon: Icon }: { value: string; label: string; 
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="text-center p-6"
+      className="text-center p-2"
     >
-      <div className="flex justify-center mb-3">
-        <Icon className="text-[#FAA1F1]" size={28} />
+      <div className="flex justify-center mb-2">
+        <Icon className="text-[#FAA1F1]" size={32} />
       </div>
-      <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] bg-clip-text text-transparent mb-2">
+      <div className="text-4xl md:text-5xl font-light bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] bg-clip-text text-transparent mb-1">
         {value}
       </div>
-      <div className="text-muted-foreground">{label}</div>
+      <div className="text-muted-foreground text-base">{label}</div>
     </motion.div>
   );
 }
@@ -725,21 +700,21 @@ function FeatureCard({ title, description, icon: Icon, index }: { title: string;
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative p-6 rounded-xl bg-card/50 border border-border/50 overflow-hidden hover:border-[#FAA1F1]/30 transition-colors"
+      className="relative p-8 rounded-2xl bg-card/50 border border-border/50 overflow-hidden hover:border-[#FAA1F1]/30 transition-colors"
     >
       <div
-        className="pointer-events-none absolute inset-0 rounded-xl transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
         style={{
           background: `radial-gradient(250px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(250, 161, 241, 0.12), rgba(151, 174, 255, 0.08), transparent 40%)`,
           opacity: isHovered ? 1 : 0,
         }}
       />
       <div className="relative">
-        <div className="h-10 w-10 rounded-lg bg-[#6161FF]/10 flex items-center justify-center mb-4">
-          <Icon className="text-[#6161FF]" size={20} />
+        <div className="h-14 w-14 rounded-xl bg-[#6161FF]/10 flex items-center justify-center mb-5">
+          <Icon className="text-[#6161FF]" size={28} />
         </div>
-        <h3 className="font-semibold mb-2">{title}</h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <h3 className="font-semibold text-lg mb-3">{title}</h3>
+        <p className="text-base text-muted-foreground">{description}</p>
       </div>
     </motion.div>
   );
@@ -750,24 +725,35 @@ export default function Home() {
     <>
       <Hero />
 
+      {/* Apps Grid - peeks into hero */}
+      <AppsShowcaseGrid />
+
       {/* App Showcase Section */}
       <AppShowcase />
 
       {/* Stats Section */}
       <section className="py-16 border-y border-border/50 bg-card/30">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatCard value="10K+" label="Items Imported" icon={Upload} />
-            <StatCard value="500+" label="Happy Users" icon={Users} />
-            <StatCard value="99.9%" label="Uptime" icon={Zap} />
-            <StatCard value="<1s" label="Avg. Response" icon={Clock} />
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
+          <div className="flex flex-wrap justify-center gap-32 md:gap-44">
+            <StatCard value="5x" label="Faster Than Others" icon={Zap} />
+            <StatCard value="10x" label="More Secure" icon={Shield} />
+            <StatCard value="99.9%" label="Uptime" icon={Clock} />
+            <div className="text-center p-2">
+              <div className="flex justify-center mb-2">
+                <img src="/monday-logo.svg" alt="monday.com" className="h-8" />
+              </div>
+              <div className="text-4xl md:text-5xl font-light bg-gradient-to-r from-[#97AEFF] via-[#FAA1F1] to-[#6161FF] bg-clip-text text-transparent mb-1">
+                Certified
+              </div>
+              <div className="text-muted-foreground text-base">monday Partner</div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -775,7 +761,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-4xl md:text-6xl font-light mb-6">
               How It Works
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -783,7 +769,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             <StepCard
               step="Step 1"
               title="Install the App"
@@ -810,8 +796,8 @@ export default function Home() {
       </section>
 
       {/* Featured Apps Section */}
-      <section className="py-20 bg-card/30">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-card/30 overflow-x-clip">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -819,45 +805,21 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 text-sm text-green-500 mb-4">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-              </span>
-              Available Now
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Apps</h2>
+            <h2 className="text-4xl md:text-6xl font-light mb-6">Our Apps</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Powerful tools designed to enhance your monday.com experience
             </p>
           </motion.div>
+        </div>
 
-          {/* Live Apps */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
-            {liveApps.map((app, index) => (
-              <AppCard key={app.slug} app={app} index={index} />
-            ))}
+        {/* Slider bleeding off both edges */}
+        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-hidden">
+          <div className="pl-4 md:pl-36 lg:pl-56">
+            <AppSlider apps={[...liveApps, ...comingSoonApps]} />
           </div>
+        </div>
 
-          {/* Coming Soon Apps */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-8"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#97AEFF]/10 border border-[#97AEFF]/20 text-sm text-[#97AEFF] mb-4">
-              Coming Soon
-            </div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {comingSoonApps.slice(0, 6).map((app, index) => (
-              <AppCard key={app.slug} app={app} index={index} />
-            ))}
-          </div>
-
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -876,7 +838,7 @@ export default function Home() {
 
       {/* Why Choose Us Section */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -884,7 +846,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-4xl md:text-6xl font-light mb-6">
               Why Choose Everyday Apps?
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -901,13 +863,13 @@ export default function Home() {
             />
             <FeatureCard
               title="Enterprise Security"
-              description="SOC 2 compliant with data that never leaves monday's servers."
+              description="SOC 2 compliant with network isolation - connections restricted to approved services only."
               icon={Shield}
               index={1}
             />
             <FeatureCard
               title="Lightning Fast"
-              description="Optimized for performance with sub-second response times."
+              description="Multi-region deployment (US, EU, AU) for optimized performance worldwide."
               icon={Zap}
               index={2}
             />
@@ -923,30 +885,33 @@ export default function Home() {
 
       <TrustSection />
 
+      {/* Bento Grid Section */}
+      <BentoGrid />
+
       {/* Testimonial Section */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto"
+            className="max-w-6xl mx-auto"
           >
-            <div className="relative p-8 md:p-12 rounded-2xl bg-gradient-to-br from-[#97AEFF]/10 via-card/50 to-[#FAA1F1]/10 border border-border/50">
-              <Quote className="absolute top-6 left-6 text-[#FAA1F1]/20" size={48} />
+            <div className="relative p-10 md:p-14 rounded-3xl bg-gradient-to-br from-[#97AEFF]/10 via-card/50 to-[#FAA1F1]/10 border border-border/50">
+              <Quote className="absolute top-8 left-8 text-[#FAA1F1]/20" size={56} />
               <div className="relative">
-                <p className="text-xl md:text-2xl font-medium mb-6 leading-relaxed">
+                <p className="text-2xl md:text-3xl font-medium mb-8 leading-relaxed">
                   "Everyday Import saved us hours of manual data entry. We migrated 5,000+ contacts
                   from our old CRM to monday.com in minutes. The smart column mapping just works!"
                 </p>
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-gradient-to-br from-[#97AEFF] to-[#FAA1F1] flex items-center justify-center text-white font-bold">
+                <div className="flex items-center gap-5">
+                  <div className="h-14 w-14 rounded-full bg-gradient-to-br from-[#97AEFF] to-[#FAA1F1] flex items-center justify-center text-white font-light text-lg">
                     SK
                   </div>
                   <div>
-                    <div className="font-semibold">Sarah K.</div>
-                    <div className="text-sm text-muted-foreground">Operations Manager</div>
+                    <div className="font-semibold text-lg">Sarah K.</div>
+                    <div className="text-base text-muted-foreground">Operations Manager</div>
                   </div>
                 </div>
               </div>
@@ -957,25 +922,25 @@ export default function Home() {
 
       {/* Global Reach Section */}
       <section className="py-20 bg-card/30">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Trusted by Teams Worldwide
+              <h2 className="text-4xl md:text-6xl font-light mb-6">
+                Built for Global Teams
               </h2>
               <p className="text-muted-foreground text-lg mb-6">
-                From startups to enterprises, teams across the globe rely on Everyday Apps
-                to streamline their monday.com workflows.
+                Enterprise-ready infrastructure designed to serve teams anywhere in the world
+                with security and compliance built-in.
               </p>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-green-500" size={20} />
-                  <span>Used in 50+ countries</span>
+                  <span>Deployed in US, EU & AU regions</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-green-500" size={20} />
@@ -987,7 +952,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-green-500" size={20} />
-                  <span>Multi-language support coming soon</span>
+                  <span>Network isolation enabled</span>
                 </div>
               </div>
             </motion.div>
@@ -996,54 +961,60 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="grid grid-cols-2 gap-4"
+              className="grid grid-cols-2 gap-5"
             >
-              <div className="p-6 rounded-xl bg-card/50 border border-border/50 text-center">
-                <Globe2 className="mx-auto mb-3 text-[#97AEFF]" size={32} />
-                <div className="text-2xl font-bold">50+</div>
-                <div className="text-sm text-muted-foreground">Countries</div>
+              <div className="p-8 rounded-2xl bg-card/50 border border-border/50 text-center">
+                <Globe2 className="mx-auto mb-4 text-[#97AEFF]" size={40} />
+                <div className="text-3xl font-light">3</div>
+                <div className="text-base text-muted-foreground">Regions</div>
               </div>
-              <div className="p-6 rounded-xl bg-card/50 border border-border/50 text-center">
-                <Building2 className="mx-auto mb-3 text-[#FAA1F1]" size={32} />
-                <div className="text-2xl font-bold">200+</div>
-                <div className="text-sm text-muted-foreground">Companies</div>
+              <div className="p-8 rounded-2xl bg-card/50 border border-border/50 text-center">
+                <Shield className="mx-auto mb-4 text-[#FAA1F1]" size={40} />
+                <div className="text-3xl font-light">SOC 2</div>
+                <div className="text-base text-muted-foreground">Compliant</div>
               </div>
-              <div className="p-6 rounded-xl bg-card/50 border border-border/50 text-center">
-                <Users className="mx-auto mb-3 text-[#6161FF]" size={32} />
-                <div className="text-2xl font-bold">500+</div>
-                <div className="text-sm text-muted-foreground">Active Users</div>
+              <div className="p-8 rounded-2xl bg-card/50 border border-border/50 text-center">
+                <Clock className="mx-auto mb-4 text-[#6161FF]" size={40} />
+                <div className="text-3xl font-light">24/7</div>
+                <div className="text-base text-muted-foreground">Monitoring</div>
               </div>
-              <div className="p-6 rounded-xl bg-card/50 border border-border/50 text-center">
-                <Zap className="mx-auto mb-3 text-green-500" size={32} />
-                <div className="text-2xl font-bold">99.9%</div>
-                <div className="text-sm text-muted-foreground">Uptime</div>
+              <div className="p-8 rounded-2xl bg-card/50 border border-border/50 text-center">
+                <Zap className="mx-auto mb-4 text-green-500" size={40} />
+                <div className="text-3xl font-light">99.9%</div>
+                <div className="text-base text-muted-foreground">Uptime</div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <FAQ />
+
+      {/* Newsletter Section */}
+      <NewsletterSection />
+
       {/* CTA Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
+      <section className="py-24">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-6xl mx-auto text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-light mb-6">
               Ready to supercharge your monday.com?
             </h2>
-            <p className="text-muted-foreground text-lg mb-8">
+            <p className="text-muted-foreground text-xl mb-10">
               Install Everyday Import today and see the difference. More apps coming soon!
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild className="bg-gradient-to-r from-[#6B8AFF] via-[#E871D8] to-[#6161FF] hover:opacity-90 border-0 text-white">
+            <div className="flex flex-col sm:flex-row gap-5 justify-center">
+              <Button size="lg" asChild className="bg-gradient-to-r from-[#6B8AFF] via-[#E871D8] to-[#6161FF] hover:opacity-90 border-0 text-white text-lg px-10 py-6">
                 <Link href="/apps">Get Started Free</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="border-[#FAA1F1]/50 hover:bg-[#FAA1F1]/10 hover:border-[#FAA1F1]">
+              <Button size="lg" variant="outline" asChild className="border-[#FAA1F1]/50 hover:bg-[#FAA1F1]/10 hover:border-[#FAA1F1] text-lg px-10 py-6">
                 <Link href="/contact">Contact Sales</Link>
               </Button>
             </div>

@@ -51,7 +51,7 @@ function ValueCard({ icon: Icon, title, description, color }: { icon: LucideIcon
 export default function AboutPage() {
   return (
     <div className="py-20">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -59,7 +59,7 @@ export default function AboutPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">About Everyday Apps</h1>
+          <h1 className="text-4xl md:text-5xl font-light mb-4">About Everyday Apps</h1>
           <p className="text-muted-foreground text-lg">
             We&apos;re building the tools that make monday.com even more powerful
           </p>
@@ -72,7 +72,7 @@ export default function AboutPage() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="max-w-3xl mx-auto mb-16"
         >
-          <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+          <h2 className="text-2xl font-light mb-4">Our Mission</h2>
           <p className="text-muted-foreground text-lg leading-relaxed mb-4">
             At Everyday Apps, we believe that great software should be simple, secure, and powerful.
             We build apps that seamlessly integrate with monday.com, helping teams work more efficiently
@@ -93,7 +93,7 @@ export default function AboutPage() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto mb-16"
         >
-          <h2 className="text-2xl font-bold mb-4">Why monday.com?</h2>
+          <h2 className="text-2xl font-light mb-4">Why monday.com?</h2>
           <p className="text-muted-foreground text-lg leading-relaxed mb-4">
             monday.com has become the go-to work operating system for teams around the world.
             Its flexibility and power make it an ideal platform for building apps that truly
@@ -114,7 +114,7 @@ export default function AboutPage() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto mb-16"
         >
-          <h2 className="text-2xl font-bold mb-4">Looking Ahead</h2>
+          <h2 className="text-2xl font-light mb-4">Looking Ahead</h2>
           <p className="text-muted-foreground text-lg leading-relaxed mb-4">
             We&apos;re just getting started. With Everyday Import already helping teams
             bring their data into monday.com, we&apos;re working on a suite of apps
@@ -134,7 +134,7 @@ export default function AboutPage() {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
         >
-          <h2 className="text-2xl font-bold mb-8 text-center">Our Values</h2>
+          <h2 className="text-2xl font-light mb-8 text-center">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <ValueCard
               icon={Shield}

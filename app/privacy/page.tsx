@@ -19,10 +19,7 @@ const sections = [
     title: "2. Data Controller",
     content: `
       <p>Everyday Apps acts as a data processor on behalf of monday.com and its users. monday.com acts as the data controller for data stored within their platform.</p>
-      <p>For questions about this privacy policy, contact us at:</p>
-      <ul>
-        <li>Email: privacy@everydayapps.com</li>
-      </ul>
+      <p>For questions about this privacy policy, please use our contact form.</p>
     `,
   },
   {
@@ -93,7 +90,7 @@ const sections = [
         <li><strong>Right to object</strong> - Object to certain types of processing</li>
         <li><strong>Right to withdraw consent</strong> - Withdraw consent at any time</li>
       </ul>
-      <p>To exercise these rights, contact us at privacy@everydayapps.com or manage your data directly through monday.com's platform.</p>
+      <p>To exercise these rights, use our contact form or manage your data directly through monday.com's platform.</p>
     `,
   },
   {
@@ -161,11 +158,7 @@ const sections = [
   {
     title: "14. Contact Us",
     content: `
-      <p>For privacy-related inquiries or to exercise your GDPR rights:</p>
-      <ul>
-        <li><strong>Email:</strong> privacy@everydayapps.com</li>
-        <li><strong>Subject line:</strong> "Privacy Inquiry" or "GDPR Request"</li>
-      </ul>
+      <p>For privacy-related inquiries or to exercise your GDPR rights, please use our contact form.</p>
       <p>We aim to respond to all privacy requests within 30 days.</p>
     `,
   },
@@ -174,7 +167,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div className="py-20">
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12 max-w-4xl">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -182,7 +175,7 @@ export default function PrivacyPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Privacy Policy</h1>
+          <h1 className="text-4xl md:text-5xl font-light mb-4">Privacy Policy</h1>
           <p className="text-muted-foreground">
             Last updated: {lastUpdated}
           </p>

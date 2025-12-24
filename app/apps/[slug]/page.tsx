@@ -8,7 +8,7 @@ import { AppType, MondayProduct } from "@/lib/products";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { AppIcon } from "@/components/AppIcon";
+import { AppIconWithBorder } from "@/components/AppIcon";
 import {
   ImportMockup,
   FormMockup,
@@ -52,7 +52,7 @@ export default function AppPage() {
   if (!app) {
     return (
       <div className="py-20 text-center">
-        <h1 className="text-4xl font-bold mb-4">App Not Found</h1>
+        <h1 className="text-4xl font-light mb-4">App Not Found</h1>
         <p className="text-muted-foreground mb-8">
           The app you&apos;re looking for doesn&apos;t exist.
         </p>
@@ -69,7 +69,7 @@ export default function AppPage() {
 
   return (
     <div className="py-20">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12">
         {/* Back link */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -93,12 +93,10 @@ export default function AppPage() {
           className="mb-12"
         >
           <div className="flex items-start gap-6 mb-6">
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-              <AppIcon icon={app.icon} size={40} />
-            </div>
+            <AppIconWithBorder icon={app.icon} size="xl" />
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-4xl md:text-5xl font-bold">{app.name}</h1>
+                <h1 className="text-4xl md:text-5xl font-light">{app.name}</h1>
                 <Badge
                   variant={isLive ? "default" : "secondary"}
                   className={
@@ -233,17 +231,6 @@ export default function AppPage() {
                         </p>
                       </div>
 
-                      <div className="text-center">
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Or contact us directly:
-                        </p>
-                        <a
-                          href="mailto:waitlist@everydayapps.com"
-                          className="text-primary hover:underline text-sm"
-                        >
-                          waitlist@everydayapps.com
-                        </a>
-                      </div>
                     </div>
                   </>
                 )}

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { liveApps, AppData } from "@/lib/apps";
-import { AppIcon } from "@/components/AppIcon";
+import { AppIconWithBorder } from "@/components/AppIcon";
 import { ArrowRight } from "lucide-react";
 
 function DocCard({ app, index }: { app: AppData; index: number }) {
@@ -46,9 +46,7 @@ function DocCard({ app, index }: { app: AppData; index: number }) {
 
           <CardHeader className="relative">
             <div className="flex items-center gap-3 mb-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                <AppIcon icon={app.icon} size={20} />
-              </div>
+              <AppIconWithBorder icon={app.icon} size="sm" />
               <CardTitle className="group-hover:text-primary transition-colors">
                 {app.name}
               </CardTitle>
@@ -72,7 +70,7 @@ function DocCard({ app, index }: { app: AppData; index: number }) {
 export default function DocsPage() {
   return (
     <div className="py-20">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -80,7 +78,7 @@ export default function DocsPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Documentation</h1>
+          <h1 className="text-4xl md:text-5xl font-light mb-4">Documentation</h1>
           <p className="text-muted-foreground text-lg">
             Learn how to use Everyday Apps to supercharge your monday.com
             workflows.

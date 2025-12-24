@@ -8,6 +8,7 @@ export interface MondayProduct {
   color: string;
   hoverColor: string;
   icon: LucideIcon;
+  logo: string;
   useCases: Record<AppType, string[]>;
 }
 
@@ -15,9 +16,10 @@ export const mondayProducts: MondayProduct[] = [
   {
     id: "work-management",
     name: "Work Management",
-    color: "#97AEFF",
-    hoverColor: "#6161FF",
+    color: "#6161FF",
+    hoverColor: "#4a4ad9",
     icon: Briefcase,
+    logo: "/logos/Logo_WorkManagement.svg",
     useCases: {
       import: ["Projects", "Tasks", "Timelines"],
       form: ["Request Forms", "Intake Forms", "Surveys"],
@@ -29,9 +31,10 @@ export const mondayProducts: MondayProduct[] = [
   {
     id: "crm",
     name: "CRM",
-    color: "#00c875",
-    hoverColor: "#00a862",
+    color: "#00A0A0",
+    hoverColor: "#008080",
     icon: Users,
+    logo: "/logos/Logo_CRM.svg",
     useCases: {
       import: ["Contacts", "Leads", "Deals"],
       form: ["Lead Capture", "Contact Forms", "Quote Requests"],
@@ -43,9 +46,10 @@ export const mondayProducts: MondayProduct[] = [
   {
     id: "dev",
     name: "Dev",
-    color: "#784bd1",
-    hoverColor: "#6a3fc4",
+    color: "#00CA72",
+    hoverColor: "#00a85d",
     icon: Code,
+    logo: "/logos/Logo_Dev.svg",
     useCases: {
       import: ["Issues", "Bugs", "Sprints"],
       form: ["Bug Reports", "Feature Requests", "Feedback"],
@@ -57,9 +61,10 @@ export const mondayProducts: MondayProduct[] = [
   {
     id: "service",
     name: "Service",
-    color: "#ff5ac4",
-    hoverColor: "#e54db0",
+    color: "#FF4D77",
+    hoverColor: "#e6456b",
     icon: Headphones,
+    logo: "/logos/Logo_Service.svg",
     useCases: {
       import: ["Tickets", "Customers", "SLAs"],
       form: ["Support Requests", "Feedback Forms", "CSAT Surveys"],

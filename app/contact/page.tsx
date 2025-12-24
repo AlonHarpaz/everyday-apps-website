@@ -6,7 +6,7 @@ import { Mail } from "lucide-react";
 export default function ContactPage() {
   return (
     <div className="py-20">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -14,7 +14,7 @@ export default function ContactPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
+          <h1 className="text-4xl md:text-5xl font-light mb-4">Contact Us</h1>
           <p className="text-muted-foreground text-lg">
             Have questions? We&apos;d love to hear from you. Fill out the form below
             and we&apos;ll get back to you as soon as possible.
@@ -52,23 +52,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Alternative Contact */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-center mt-12"
-          >
-            <p className="text-muted-foreground mb-2">
-              Prefer email?
-            </p>
-            <a
-              href="mailto:contact@everydayapps.com"
-              className="text-primary hover:underline"
-            >
-              contact@everydayapps.com
-            </a>
-          </motion.div>
         </motion.div>
       </div>
     </div>

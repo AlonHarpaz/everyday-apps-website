@@ -32,7 +32,7 @@ export function Footer() {
         }}
       />
 
-      <div className="container mx-auto px-4 py-12 relative">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12 py-12 relative">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Image
@@ -82,6 +82,11 @@ export function Footer() {
               <li>
                 <Link href="/partners" className="hover:text-foreground transition-colors">
                   Partner Program
+                </Link>
+              </li>
+              <li>
+                <Link href="/pricing" className="hover:text-foreground transition-colors">
+                  Pricing
                 </Link>
               </li>
               <li>
@@ -135,6 +140,9 @@ export function Footer() {
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-foreground transition-colors">
               Privacy Policy
+            </Link>
+            <Link href="/accessibility" className="hover:text-foreground transition-colors">
+              Accessibility
             </Link>
             <a
               href="https://status.everyday-m.com/"
