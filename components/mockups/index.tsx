@@ -5,3 +5,4 @@ export { MailMockup } from "./MailMockup";
 export { SignatureMockup } from "./SignatureMockup";
 export { ProductSidebar } from "./ProductSidebar";
 export { MockupWithProducts } from "./MockupWithProducts";
+export { BoardMockup } from "./BoardMockup";

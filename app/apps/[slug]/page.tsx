@@ -69,7 +69,7 @@ export default function AppPage() {
 
   return (
     <div className="py-20">
-      <div className="container mx-auto px-4 md:px-8 lg:px-12">
+      <div className="container mx-auto px-4 md:px-6">
         {/* Back link */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -127,7 +127,7 @@ export default function AppPage() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mb-12"
           >
-            <div className="max-w-4xl mx-auto">
+            <div className="w-full">
               <MockupWithProducts appType={appType}>
                 {({ product, useCases }) => (
                   <MockupComponent product={product} useCases={useCases} />
